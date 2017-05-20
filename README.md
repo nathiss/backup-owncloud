@@ -9,6 +9,7 @@ Script to making backup to your owncloud server.
 ## Installation
 1. Create `config.json` file. (See `config.json.sample`)
 2. Configure script by editing `config.json` file.
+3. Run `pip3 install -r requirements.txt`.
 
 ## Usage
 Just run:
