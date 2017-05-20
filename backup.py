@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+# -*- conding: utf-8 -*-
+#
+# vim: expandtab shiftwidth=4 softtabstop=4
+#
 import os
 import re
 import sys
