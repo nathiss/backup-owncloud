@@ -13,24 +13,25 @@ import owncloud
 install_dir = os.path.realpath(os.path.dirname(__file__))
 os.chdir(install_dir)
 
+
 def check_config(config):
-    if not "protocol" in config:
+    if "protocol" not in config:
         raise KeyError("Protocol parameter is required.")
-    if not "host" in config:
+    if "host" not in config:
         raise KeyError("Host parameter is required.")
-    if not "port" in config:
+    if "port" not in config:
         raise KeyError("Port parameter is required.")
-    if not "login" in config:
-        raise KeyError("Login parameter is required.")
-    if not "passwd" in config:
+    if "lognot in" in config:
+        raise KeyError("Lognot in parameter is required.")
+    if "passwd" not in config:
         raise KeyError("Passwd parameter is required.")
-    if not "verifyCerts" in config:
+    if "verifyCerts" not in config:
         raise KeyError("VerifyConfig parameter is required.")
-    if not "remoteDir" in config:
+    if "remoteDir" not in config:
         raise KeyError("RemoteDir parameter is required.")
-    if not "useHashes" in config:
+    if "useHashes" not in config:
         raise KeyError("UseHashes parameter is required.")
-    if not "files" in config:
+    if "files" not in config:
         raise KeyError("Files parameter is required.")
 
     if not re.compile('^http[s]?$').match(config['protocol']):
@@ -43,7 +44,8 @@ def check_config(config):
     if not (config['useHashes'] == "true" or config['useHashes'] == "false"):
         raise ValueError("UseHashes has to be \"true\" or \"false\".")
 
-    if not (config['verifyCerts'] == "true" or config['verifyCerts'] == "false"):
+    if not (config['verifyCerts'] == "true" or
+            config['verifyCerts'] == "false"):
         raise ValueError("VerifyCerts has to be \"true\" or \"false\".")
 
     if not isinstance(config['files'], list):
@@ -52,6 +54,7 @@ def check_config(config):
     pattern = re.compile("^/.+$")
     if any(not pattern.match(path) for path in config['files']):
         raise ValueError("Paths must be absolute.")
+
 
 def getAllSubpaths(paths):
     result = []
@@ -64,11 +67,13 @@ def getAllSubpaths(paths):
                     result.append(os.path.abspath(os.path.join(dir_path, f)))
     return result
 
+
 def splitPaths(paths):
     result = []
     for path in paths:
         result.append(path.split('/')[1:])
     return result
+
 
 def makeArchive(tmp_dir):
     name = datetime.datetime.now().strftime("%H.%M-%d-%m-%Y") + ".tar.xz"
@@ -79,6 +84,7 @@ def makeArchive(tmp_dir):
     tar.close()
     return archive_path
 
+
 def createTmpTree(files_paths):
     splited_paths = splitPaths(files_paths)
     tmp_dir_path = tempfile.mkdtemp(prefix='backup-')
@@ -88,14 +94,17 @@ def createTmpTree(files_paths):
             if not os.path.isdir(parent_dir):
                 os.mkdir(parent_dir)
             os.chdir(parent_dir)
-        shutil.copy2(files_paths[idx], os.path.join(tmp_dir_path, files_paths[idx][1:]))
+        shutil.copy2(files_paths[idx],
+                     os.path.join(tmp_dir_path, files_paths[idx][1:]))
     os.chdir(tmp_dir_path)
     return tmp_dir_path
+
 
 def getVerifyCerts(config):
     if config['verifyCerts'] == "true":
         return True
     return False
+
 
 def main():
     print("[INFO]\tReading config.json file.")
@@ -116,12 +125,17 @@ def main():
     archive_path = makeArchive(tmp_dir_path)
 
     print("[INFO]\tSending to server.")
-    oc = owncloud.Client("%s://%s:%s" % (config["protocol"], config["host"], config["port"]), verify_certs=getVerifyCerts(config))
+    oc = owncloud.Client(
+           "%s://%s:%s" % (config["protocol"], config["host"], config["port"]),
+           verify_certs=getVerifyCerts(config)
+        )
     oc.login(config["login"], config["passwd"])
-    oc.put_file(os.path.join(config["remoteDir"], archive_path.split("/")[-1]), archive_path)
+    oc.put_file(os.path.join(config["remoteDir"], archive_path.split("/")[-1]),
+                archive_path)
     oc.logout()
 
     print("[INFO]\tDone.")
 
 if __name__ == "__main__":
     main()
+
