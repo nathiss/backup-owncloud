@@ -5,10 +5,6 @@ Script to making backup to your owncloud server.
 - Unix[-like] system
 - Python 3
 - [pyocclient](https://github.com/owncloud/pyocclient)
-You can install pyocclient by running:
-```bash
-$ pip install pyocclient
-```
 
 ## Installation
 1. Create `config.json` file. (See `config.json.sample`)
