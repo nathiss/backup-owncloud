@@ -1,9 +1,10 @@
 # OwnCloud Backup
+[![Build Status](https://travis-ci.org/nathiss/backup-owncloud.svg?branch=master)](https://travis-ci.org/nathiss/backup-owncloud)
 Script to making backup to your owncloud server.
 
 ## Requiremets
 - Unix[-like] system
-- Python 3
+- Python >= 3.3
 - [pyocclient](https://github.com/owncloud/pyocclient)
 
 ## Installation
