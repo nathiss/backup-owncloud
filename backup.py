@@ -105,7 +105,7 @@ def createTmpTree(files_paths):
 
 
 def getVerifyCerts(config):
-    if config['verifyCerts'] == "true":
+    if config == "true":
         return True
     return False
 
@@ -131,7 +131,7 @@ def main():
     print("[INFO]\tSending to server.")
     oc = owncloud.Client(
            "%s://%s:%s" % (config["protocol"], config["host"], config["port"]),
-           verify_certs=getVerifyCerts(config)
+           verify_certs=getVerifyCerts(config['verifyCerts'])
         )
     oc.login(config["login"], config["passwd"])
     oc.put_file(os.path.join(config["remoteDir"], archive_path.split("/")[-1]),
