@@ -1,0 +1,14 @@
+{
+    "protocol": "https",
+    "host": "127.0.0.1",
+    "port": 443,
+    "login": "admin",
+    "passwd": "admin",
+    "verifyCerts": "true",
+    "remoteDir": "/backups",
+    "useHashes": "true",
+    "files": [
+        "/path/to/file.txt",
+        "/path/to/directory"
+    ]
+}
