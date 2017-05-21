@@ -15,7 +15,7 @@ Script to making backup to your owncloud server.
 ## Usage
 Just run:
 ```bash
-$ python 3 /path/to/install/dir/backup.py
+$ python3 /path/to/install/dir/backup.py
 ```
 you can run it from any directory.
 
